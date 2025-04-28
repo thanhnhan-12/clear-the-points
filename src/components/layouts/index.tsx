@@ -13,7 +13,7 @@ const ClearThePoints = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [time, setTime] = useState(0);
   const [nextId, setNextId] = useState(0);
-  const [status, setStatus] = useState<'playing' | 'cleared' | 'gameover'>('playing');
+  const [status, setStatus] = useState<'idle' | 'playing' | 'cleared' | 'gameover'>('idle');
   const [clickedPoints, setClickedPoints] = useState<number[]>([]);
 
   useEffect(() => {
@@ -80,20 +80,23 @@ const ClearThePoints = () => {
   };
 
   const renderTitle = () => {
+    if (status === 'idle' || status === 'playing' ) {
+      return { text: "LET'S PLAY", colorClass: '' };
+    }
     if (status === 'cleared') {
       return { text: 'ALL CLEARED', colorClass: 'text-red-700' };
     }
     if (status === 'gameover') {
       return { text: 'GAME OVER', colorClass: 'text-red-700' };
     }
-    return { text: "LET'S PLAY", colorClass: '' };
+    return { text: '', colorClass: '' };
   };
 
   const { text, colorClass } = renderTitle();
 
   return (
     <div className='wrap-clear-points'>
-      <div className="" >
+      <div className="mx-[30rem]" >
         <h3 className={`wrap-title text-[20px] font-bold ${colorClass}`}>
           {text}
         </h3>
@@ -114,11 +117,11 @@ const ClearThePoints = () => {
         </div>
 
         <ButtonCommon className="my-2" onClick={handlePlay}>
-          {(status === 'playing' || status === 'cleared' || status === 'gameover') ? 'Restart' : 'Play'}
+          {(status === 'idle') ? 'Play' : 'Restart'}
         </ButtonCommon>
 
         <div className="wrap-box-container">
-          <div className="wrap-box-points relative border border-black w-[35%] h-[35rem] ">
+          <div className="wrap-box-points relative border border-black w-full h-[35rem] ">
             {
               points?.map((point) => (
                 <div
