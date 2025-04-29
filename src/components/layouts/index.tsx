@@ -212,6 +212,8 @@ const ClearThePoints = () => {
                         {point.countdown.toFixed(1)}s
                       </div>
                     )}
+
+                    <p className="hidden" >Clicked: {clickedPoints.length}</p>
                   </div>
                 </div>
               ))
